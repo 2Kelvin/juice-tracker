@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2023 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -53,10 +37,20 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        compose = true // enabling jetpack compose for this app
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1" // kotlin compiler for compose
     }
 }
 
 dependencies {
+    // compose dependencies
+    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation("androidx.activity:activity-compose:1.9.1")
+    implementation("androidx.compose.material3:material3")
+    implementation("com.google.accompanist:accompanist-themeadapter-material3:0.28.0")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.core:core-ktx:1.12.0")
@@ -72,4 +66,7 @@ dependencies {
     implementation("androidx.room:room-runtime:${rootProject.extra["room_version"]}")
     implementation("com.google.android.material:material:1.11.0")
     ksp("androidx.room:room-compiler:${rootProject.extra["room_version"]}")
+
+    // compose ide support
+    debugImplementation("androidx.compose.ui:ui-tooling")
 }
